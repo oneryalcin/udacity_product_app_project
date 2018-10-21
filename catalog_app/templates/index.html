@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1>Categories</h1>
+            <ul>
+                {% for category in categories %}
+                <li><h3><a href="{{ url_for('catalog.main', category=category.name) }}">{{ category.name }}</a></h3></li>
+                {% endfor %}
+            </ul>
+        <hr>
+        <h2> List of 5 recent Items</h2>
+        <ul>
+            {% for item in items %}
+            <li>
+                <a href="{{ url_for('items.main', category=item.category.name, item=item.name)}}">{{ item.name }}</a>
+                <i> ({{ item.category.name }})</i>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

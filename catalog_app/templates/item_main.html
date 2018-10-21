@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1> {{ item.name }} <i>({{ item.category.name }})</i></h1>
+        <hr>
+        <p> {{ item.description }} </p>
+        <hr>
+        {% if current_user.is_authenticated %}
+            <a class="btn btn-primary" href="{{ url_for('items.edit', item=item.name) }}">Edit</a>
+            <a class="btn btn-danger" href="{{ url_for('items.delete', item=item.name) }}">Delete</a>
+        {% endif %}
+    </div>
+{% endblock %}

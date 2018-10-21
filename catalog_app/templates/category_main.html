@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="jumbotron">
+        <h1> {{ category.name }}</h1>
+        {% if current_user.is_authenticated %}
+        <h6><a href="{{ url_for('items.add')}}">Add new item</a></h6>
+        {% endif %}
+        <hr>
+        <ul>
+            {% for item in category.items %}
+            <li><a href="{{ url_for('items.main', category=category.name, item=item.name) }}">{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
