@@ -10,8 +10,11 @@ class AddEditForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = TextAreaField('Description', validators=[DataRequired()])
 
-    # Populate all available categories
-    choices = [(str(category.id), category.name) for category in Category.query.all()]
+    # Populate some categories
+    try:
+        choices = [(str(category.id), category.name) for category in Category.query.all()]
+    except:
+        choices = []
     category = SelectField('Category', choices=choices)
 
     submit = SubmitField('Submit')

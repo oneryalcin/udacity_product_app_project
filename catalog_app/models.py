@@ -1,4 +1,20 @@
-from catalog_app import db
+from flask_login import UserMixin
+from catalog_app import db, login_manager
+
+
+@login_manager.user_loader
+def load_user(userid):
+    return User(userid)
+
+
+# Very simple user model, We use Google Oauth and track user email
+# for authentication in Flask-Login user id is user email
+class User(UserMixin):
+    def __init__(self, email):
+        self.id = email
+
+    def __repr__(self):
+        return "User : {}".format(self.id)
 
 
 class Category(db.Model):

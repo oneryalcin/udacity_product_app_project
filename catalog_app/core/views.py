@@ -1,7 +1,38 @@
-from flask import render_template, Blueprint, jsonify
-from catalog_app.models import Item, Category
+from flask import render_template, Blueprint, jsonify, redirect, url_for, request
+from flask_login import login_user, login_required, logout_user
+from catalog_app.models import Item, Category, User
+from flask_dance.contrib.google import google
 
 core = Blueprint('core', __name__)
+
+
+# ########## OAUTH SETUP ############################
+# Google Oauth is pretty strict where login request can come,
+# therefore all protected endpoints first redirected to 'login' and
+# from here it is redirected to 'google.login'
+@core.route('/login')
+def login():
+    return redirect(url_for('google.login'))
+
+
+# Upon successful authentication with Google Oauth, login user locally
+@core.route("/finish_login")
+def finish_login():
+    email = google.get("/oauth2/v2/userinfo").json()['email']
+    user = User(email)
+    login_user(user)
+    if request.args.get("next"):
+        return redirect(request.args.get("next"))
+    return redirect(url_for('core.index'))
+
+
+# Logout user, you must be logged in to logout
+@core.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('core.index'))
+# ############## OAUTH END ############################
 
 
 # This is the main page
