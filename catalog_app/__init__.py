@@ -7,13 +7,15 @@ from flask_dance.contrib.google import make_google_blueprint
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'my_secret' if not os.environ.get('FLASK_SECRET') else os.environ.get('FLASK_SECRET')
+app.config['SECRET_KEY'] = 'my_secret' if not os.environ.get('FLASK_SECRET')\
+    else os.environ.get('FLASK_SECRET')
 
 ##############################
 # Database Setup
 
 basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.sqlite')
+dbdir = 'sqlite:///' + os.path.join(basedir, 'database.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = dbdir
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -34,7 +36,7 @@ os.environ["OAUTHLIB_RELAX_TOKEN_SCOPE"] = '1'
 
 # This Google Blueprint is used for Oauth via Flask Dance
 blueprint = make_google_blueprint(
-    client_id="363934459936-4rv2gcjfag21qror01a3cj0smsmtqokp.apps.googleusercontent.com",
+    client_id="363934459936-4rv2gcjfag21qror01a3cj0smsmtqokp.apps.googleusercontent.com",   # noqa
     client_secret="vn31AYsiZxJmj5UuDCvtsvG6",
     offline=True,
     scope=["profile", 'email'],
@@ -47,12 +49,11 @@ app.register_blueprint(blueprint, url_prefix="/login")
 
 ################################
 # Other Blueprint registrations
-from catalog_app.core.views import core
-from catalog_app.category.views import categories
-from catalog_app.item.views import items
+from catalog_app.core.views import core     # noqa
+from catalog_app.category.views import categories   # noqa
+from catalog_app.item.views import items    # noqa
 
 
 app.register_blueprint(core)
 app.register_blueprint(categories)
 app.register_blueprint(items)
-

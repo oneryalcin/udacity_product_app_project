@@ -19,6 +19,3 @@ def main_json(category):
 
     category = Category.query.filter_by(name=category).first()
     return jsonify(items=[item.serialize for item in category.items])
-
-
-

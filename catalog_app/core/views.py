@@ -1,4 +1,5 @@
-from flask import render_template, Blueprint, jsonify, redirect, url_for, request
+from flask import render_template, Blueprint, jsonify, \
+    redirect, url_for, request
 from flask_login import login_user, login_required, logout_user
 from catalog_app.models import Item, Category, User
 from flask_dance.contrib.google import google
@@ -51,4 +52,3 @@ def json_all():
 
     categories = Category.query.all()
     return jsonify(categories=[category.serialize for category in categories])
-

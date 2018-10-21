@@ -45,5 +45,26 @@ Go to `http://127.0.0.1:5000` to view app
 
 
 ## Authentication
-App uses Google OAuth for authentication and authorization
+App uses Google OAuth for authentication and authorization.
+When you login, you are able to add new items, edit them or remove them.
+Use your Google account to login.
 
+## API
+JSON data is returned back when you add `.json` to the http endpoint.
+
+Examples:
+
+All catalog items:
+```
+http://127.0.0.1:5000/catalog.json
+```
+
+Items in Football category
+```
+http://127.0.0.1:5000/catalog/Football/items.json
+```
+
+Maradona Jersey item under Football category
+```
+http://127.0.0.1:5000/catalog/Football/Maradona%20Jersey.json
+```

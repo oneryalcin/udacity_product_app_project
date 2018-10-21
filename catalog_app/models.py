@@ -47,7 +47,8 @@ class Item(db.Model):
     __tablename__ = 'item'
 
     id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'),
+                            nullable=False)
     name = db.Column(db.String(40), nullable=False)
     description = db.Column(db.Text, nullable=False)
 
@@ -57,7 +58,9 @@ class Item(db.Model):
         self.description = description
 
     def __repr__(self):
-        return "Item(name={}, category_id={}, description={})".format(self.name, self.category_id, self.description)
+        return "Item(name={}, category_id={}, " \
+               "description={})".format(self.name, self.category_id,
+                                        self.description)
 
     # We added this serialize function to be able to send JSON objects in a
     # serializable format

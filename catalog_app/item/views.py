@@ -15,7 +15,8 @@ def category_item_match(category, item):
 
     # Just make sure item is in the correct category
     assert item_.category.name == category, \
-        "item {} category is not in correct category of {}".format(item_.name, category)
+        "item {} category is not in correct category " \
+        "of {}".format(item_.name, category)
 
     return item_.category, item_
 
@@ -53,8 +54,10 @@ def edit(item):
         item.category_id = int(form.category.data)
         db.session.commit()
 
-        updated_category = Category.query.filter_by(id=item.category_id).first()
-        return redirect(url_for('items.main', category=updated_category.name, item=item.name))
+        updated_cat = Category.query.filter_by(id=item.category_id).first()
+        return redirect(url_for('items.main',
+                                category=updated_cat.name,
+                                item=item.name))
 
     # Edit page needs data to be filled in
     form.title.data = item.name
@@ -102,7 +105,3 @@ def delete(item):
         return redirect(url_for('core.index'))
 
     return render_template('item_delete.html', form=form, item=item)
-
-
-
-

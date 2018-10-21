@@ -12,8 +12,9 @@ class AddEditForm(FlaskForm):
 
     # Populate some categories
     try:
-        choices = [(str(category.id), category.name) for category in Category.query.all()]
-    except:
+        choices = [(str(category.id), category.name)
+                   for category in Category.query.all()]
+    except Exception:
         choices = []
     category = SelectField('Category', choices=choices)
 
